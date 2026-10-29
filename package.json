@@ -3,6 +3,9 @@
   "private": true,
   "version": "1.0.0",
   "workspaces": ["client", "server"],
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {"dev": "concurrently -k -n server,client -c yellow,cyan \"npm run dev -w server\" \"npm run dev -w client\"", "build": "npm run build -w client", "start": "npm run start -w server"},
   "devDependencies": {"concurrently": "^9.1.2"}
 }

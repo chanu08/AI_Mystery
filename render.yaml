@@ -2,10 +2,13 @@ services:
   - type: web
     name: ai-mystery-room
     runtime: node
+    plan: free
     buildCommand: npm ci --include=dev && npm run build
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:
+      - key: NODE_VERSION
+        value: 20
       - key: NODE_ENV
         value: production
       - key: GEMINI_TEXT_MODEL
