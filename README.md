@@ -80,13 +80,13 @@ flowchart TD
     Gemini -->|Structured JSON| Validator["Solvability Validator (Zod + Custom Rules)"]
     DemoStore --> Validator
     Validator -->|Pass| Storage[("MongoDB Atlas / In-Memory Store")]
-    Validator -->|Fail (up to 3x)| Gemini
+    Validator -->|Retry up to 3x on Failure| Gemini
     Player -->|Poll /api/cases/:id/status| API
-    API -->|Sanitized Case Data (safeCase)| Player
+    API -->|Sanitized Case Data| Player
     Player -->|POST /api/cases/:id/accuse| Scorer["Scoring Engine"]
     Scorer -->|Evaluate Accusation| Result{"Culprit Correct?"}
-    Result -->|Yes or Attempts Maxed| Reveal["Full Case Debrief & Share Token"]
-    Result -->|No & Attempts Left| RetryPrompt["Try Again Response"]
+    Result -->|Yes or Attempts Exhausted| Reveal["Full Case Debrief and Share Token"]
+    Result -->|No and Attempts Remain| RetryPrompt["Try Again Response"]
     Reveal --> Player
     RetryPrompt --> Player
 ```
